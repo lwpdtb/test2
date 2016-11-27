@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css">
+		body{
+			background-color: rgb(233,233,233);
+		}
+		img{
+			vertical-align:middle;
+		}
+		.container{
+			width: 1050px;
+			margin: 0 auto;
+			background-color: rgb(249,249,249);
+			min-height: 1000px;
+		}
+	
+		.left_box{
+			border: 1px solid rgb(160,160,160);
+			margin-top: 50px;
+			border-radius: 15px;
+			width: 780px;
+			float: left;
+			margin-left: 40px;
+			margin-right: 10px;
+			min-height: 600px;
+		}
+		.right_box{
+			border: 1px solid rgb(160,160,160);
+			margin-top: 50px;
+			border-radius: 15px;
+			width: 170px;
+			float: left;
+			margin: 50px 20px;
+			min-height: 200px;
+			color: rgb(160,160,160);
+		}
+		.word{
+			margin: 12px 10px;
+			font-family: Helvetica;
+        }
+		.grid{
+			height: 1px;
+			background-color: rgb(160,160,160);
+		}
+		.drag{
+			margin: 20px 13px;
+			min-height: 70px;
+		}
+		.drag_list{
+			margin-left: 10px;
+			float: left;
+			color: black;
+			font-family: Helvetica;
+			font-weight: bold;
+			padding: 5px 4px;
+		}
+		.drag_over{
+			color:rgb(160,160,160);
+		}
+		.next{
+			color: #fff;
+			background-color: rgb(120,180,228);
+			cursor: pointer;
+		}
+		.block{
+			min-height:180px;
+			min-width: 660px;
+			margin-left: 80px;
+			margin-top: 80px;
+		}
+		.top-block{
+			border: 2px solid rgb(120,188,228);
+			color: rgb(160,160,160);
+			font-weight: bold;
+			padding: 6px 8px;
+			float: left;
+		}
+		.grey{
+			color:rgb(160,160,160);
+			background-color: rgb(236,236,236);
+			border: 2px solid rgb(236,236,236);
+			margin-left: 23px;
+		}
+		.explain{
+			float: left;
+			line-height: 34px;
+		}
+		.explain-down{
+			float: left;
+			margin-left: 10px;
+		}
+		.content_box{
+			min-height: 34px;
+		}
+		.grid1{
+			width: 2px;
+			height: 53px;
+			background-color: rgb(160,160,160);
+		}
+		.grid2{
+			width: 43px;
+			height: 2px;
+			background-color: rgb(160,160,160);
+			float: left;
+			margin-top: 17px;
+		}
+		.g1{
+			margin-left: 40px;
+		}
+		.space{
+			float: left;
+			width: 5px;
+			height: 34px;
+		}
+		.g2{
+			margin-left: 20px;
+		}
+		.g4{
+			margin-left: 60px;
+			float: left;
+		}
+		.block4-explain{
+			margin-left: 160px;
+		}
+		.block2,.block3,.block4,.block1{
+			visibility: hidden;
+		}
+		.rightlogo{
+			float: right;
+			width: 32px;
+			margin-right: 10px;
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="left_box">
+			<div class="rightlogo"><img src="image/right.png" height="32px" style="display:none"></div>
+			<div style="min-height: 510px;">
+				<div class="block">
+					<div class="content_box">
+					    <div class="top-block grey block1">usually broad and flat</div>
+					    <div class="explain block1">形容词后置，扁而宽的树叶</div>
+					</div>
+					<div class="grid1 g1 block1"></div>
+					<div class="content_box">
+						<div class="top-block block0">Leves</div>
+						<div class="space"></div>
+						<div class="top-block block2">take in energy from sunlight</div>
+						<div class="grid2 block4">
+							<div class="grid1 g2"></div>
+						</div>
+						<div class="top-block block4">to survive.</div>
+						<div class="explain block4">表目的，以生存</div>
+					</div>
+					<div class="content_box">
+						<div class="explain-down">主语</div>
+						<div class="grid1 g4 block3"></div>
+						<div class="explain-down block2">谓语，吸收能量</div>
+					</div>
+					<div class="content_box">
+						<div class="grid2 block3"></div>
+						<div class="top-block block3">and carbon dioxide from the air</div>
+					</div>
+					<div class="block4-explain block3">并列结构，吸收二氧化碳</div>
+				</div>
+			</div>
+			<div class="grid"></div>
+			<div class="bottom">
+				<div class="drag">
+					<div class="drag_list drag_over">Leaves,</div>
+					<div class="box1 drag_list next" draggable="true">usually broad and flat,</div>
+					<div class="box2 drag_list">take in energy from sunlight</div>
+					<div class="box3 drag_list">and carbon dioxide from the air</div>
+					<div class="box4 drag_list">to survive.</div>
+				</div>
+			</div>
+		</div>
+		<div class="right_box">
+			<div class="word">survive<br>v. 生存</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+var Drags = document.getElementsByClassName('drag_list'), Drags_length = Drags.length, ele_Drag = null,eleName = null,block='';
+var array = new Array("block0","block0","block2","block2,block3");
+var logo_box = document.getElementsByClassName('rightlogo')[0];
+var wrong_num=0;
+
+
+for (var i=1; i<Drags_length; i+=1) {
+	Drags[i].onselectstart = function() {
+		return false;
+	};
+	Drags[i].ondragstart = function(obj) {  //start
+		obj.dataTransfer.effectAllowed = "move";//“move”：把拖动的元素移动到放置目标。
+		ele_Drag = obj.target;
+		return true;
+	};
+	Drags[i].ondragend = function(obj){     //end
+		var world = document.getElementsByClassName('top-block');
+		for(var j=0;j<world.length;j++){
+			world[j].style.backgroundColor = 'rgb(249,249,249)';
+
+			if(j == 0){
+				world[j].style.backgroundColor = 'rgb(236,236,236)';     //第一个背景色不同
+			}else{}
+				
+			
+		}
+	}
+	
+	// if(i == 4){
+	// 	name = (array[i-1].split(',')[1]||array[i-1].split(',')[0]) +' top-block';
+	// }
+
+	for(var x=0;x<5;x++){
+		var target = document.getElementsByClassName('top-block')[x];
+		target.ondragover = function(obj){
+			obj.preventDefault();	
+			this.style.backgroundColor = "rgb(160,211,255)";     //hover
+		};
+		target.ondragleave = function(){
+			this.style.backgroundColor = 'rgb(249,249,249)';     //恢复背景
+		};
+		target.ondrop = function(){
+			//alert(ele_Drag)
+			var block_num = ele_Drag.className.substring(3,4);
+			//alert(array[block_num-1].split(',')[0])
+			//alert(array[block_num-1].split(',')[1])
+			//alert(this.className.indexOf(array[block_num-1].split(',')[0]))
+			//alert(this.className.indexOf(array[block_num-1].split(',')[1]))
+			if(this.className.indexOf(array[block_num-1].split(',')[0])>-1 || this.className.indexOf(array[block_num-1].split(',')[1])>-1)
+			{//通过数组名，判定是否移动到了正确的块上。
+				wrong_num=0;
+				alert(wrong_num);
+				this.style.backgroundColor = 'rgb(249,249,249)';
+				if(ele_Drag.className.substring(3,4)<4)//单词块没有被用完
+				{
+					var next = ele_Drag.nextElementSibling||ele_Drag.nextSibling;  //获取下一单词块
+					next.setAttribute('draggable','true');  //下一个元素可拖动
+					next.className = next.className+' next';
+				}
+				ele_Drag.className = "drag_list drag_over";     //元素已使用
+				ele_Drag.setAttribute('draggable','false');    //元素已使用
+				var block_eles = document.getElementsByClassName('block'+block_num);
+				//console.log(block_eles);
+
+				for(var k=0 ;k<block_eles.length;k++){
+					block_eles[k].style.visibility = 'visible';
+				}
+				//console.log(logo_box.childNodes);
+				logo_box.childNodes[0].src = 'image/right.png';    //图片
+				logo_box.childNodes[0].style.display = 'block';    //显示
+				setTimeout("logo_box.childNodes[0].style.display='none'",1000);  //1秒
+			}
+			else{//判定错误，显示wrong
+				wrong_num+=1;
+				logo_box.childNodes[0].src = 'image/wrong.png';
+				logo_box.childNodes[0].style.display = 'block';
+				setTimeout("logo_box.childNodes[0].style.display='none'",1000);	
+                if (wrong_num>=2) {
+                  //alert(wrong_num);
+                  //console.log(array[block_num-1].split(',')[0])
+                  //array[block_num-1].split(',')[0].style.backgroundColor='black';
+                  $('[class="top-block '+array[block_num-1].split(',')[0]+'"]')[0].style.backgroundColor='black';
+                  wrong_num=0;
+                };
+			}
+		};
+	}
+}
+	
+
+
+
+
+</script>
+<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+</html>
